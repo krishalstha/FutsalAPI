@@ -1,98 +1,108 @@
-﻿using FutsalAPI.DataContext;
-using FutsalAPI.modules;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using FutsalAPI.DataContext;
+using FutsalAPI.modules;
 
-[Route("api/[controller]")]
-[ApiController]
-public class FutsalDetailsController : ControllerBase
+namespace FutsalAPI.Controllers
 {
-    private readonly FutsalDbContext _context;
-
-    public FutsalDetailsController(FutsalDbContext context)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class FutsalDetailsController : ControllerBase
     {
-        _context = context;
-    }
+        private readonly FutsalDbContext _context;
 
-    // GET: api/FutsalDetails
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<FutsalDetail>>> GetFutsalDetails()
-    {
-        return await _context.FutsalDetail.ToListAsync();
-    }
-
-    // GET: api/FutsalDetails/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<FutsalDetail>> GetFutsalDetail(int id)
-    {
-        var futsalDetail = await _context.FutsalDetail.FindAsync(id);
-
-        if (futsalDetail == null)
+        public FutsalDetailsController(FutsalDbContext context)
         {
-            return NotFound();
+            _context = context;
         }
 
-        return futsalDetail;
-    }
-
-    // PUT: api/FutsalDetails/5
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutFutsalDetail(int id, FutsalDetail futsalDetail)
-    {
-        if (id != futsalDetail.FutsalId)
+        // GET: api/FutsalDetails
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<FutsalDetail>>> GetFutsalDetail()
         {
-            return BadRequest();
+            return await _context.FutsalDetail.ToListAsync();
         }
 
-        _context.Entry(futsalDetail).State = EntityState.Modified;
+        // GET: api/FutsalDetails/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<FutsalDetail>> GetFutsalDetail(int id)
+        {
+            var futsalDetail = await _context.FutsalDetail.FindAsync(id);
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!FutsalDetailExists(id))
+            if (futsalDetail == null)
             {
                 return NotFound();
             }
-            else
-            {
-                throw;
-            }
+
+            return futsalDetail;
         }
 
-        return NoContent();
-    }
-
-    // POST: api/FutsalDetails
-    [HttpPost]
-    public async Task<ActionResult<FutsalDetail>> PostFutsalDetail(FutsalDetail futsalDetail)
-    {
-        _context.FutsalDetail.Add(futsalDetail);
-        await _context.SaveChangesAsync();
-
-        return CreatedAtAction("GetFutsalDetail", new { id = futsalDetail.FutsalId }, futsalDetail);
-    }
-
-    // DELETE: api/FutsalDetails/5
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteFutsalDetail(int id)
-    {
-        var futsalDetail = await _context.FutsalDetail.FindAsync(id);
-        if (futsalDetail == null)
+        // PUT: api/FutsalDetails/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutFutsalDetail(int id, FutsalDetail futsalDetail)
         {
-            return NotFound();
+            if (id != futsalDetail.FutsalId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(futsalDetail).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!FutsalDetailExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        _context.FutsalDetail.Remove(futsalDetail);
-        await _context.SaveChangesAsync();
+        // POST: api/FutsalDetails
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<FutsalDetail>> PostFutsalDetail(FutsalDetail futsalDetail)
+        {
+            _context.FutsalDetail.Add(futsalDetail);
+            await _context.SaveChangesAsync();
 
-        return NoContent();
-    }
+            return CreatedAtAction("GetFutsalDetail", new { id = futsalDetail.FutsalId }, futsalDetail);
+        }
 
-    private bool FutsalDetailExists(int id)
-    {
-        return _context.FutsalDetail.Any(e => e.FutsalId == id);
+        // DELETE: api/FutsalDetails/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteFutsalDetail(int id)
+        {
+            var futsalDetail = await _context.FutsalDetail.FindAsync(id);
+            if (futsalDetail == null)
+            {
+                return NotFound();
+            }
+
+            _context.FutsalDetail.Remove(futsalDetail);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool FutsalDetailExists(int id)
+        {
+            return _context.FutsalDetail.Any(e => e.FutsalId == id);
+        }
     }
 }

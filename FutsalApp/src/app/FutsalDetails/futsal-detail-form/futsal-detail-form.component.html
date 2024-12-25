@@ -1,0 +1,64 @@
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" [class.submitted]="formSubmitted" novalidate autocomplete="off">
+    <input type="hidden" name="futsalDetailId" [value]="formData.futsalDetailId">
+    
+    <div class="mb-3">
+        <label>Futsal Name</label>
+        <input class="form-control form-control-lg" placeholder="Enter Futsal Name" 
+               #futsalOwnerName="ngModel" name="futsalOwnerName"
+               [(ngModel)]="service.formData.futsalOwnerName" [attr.required]="true">
+    </div>
+    
+    <div class="mb-3">
+        <label>Location</label>
+        <input class="form-control form-control-lg" placeholder="Location of your place" 
+               #futsalLocation="ngModel" name="location"
+               [(ngModel)]="service.formData.location" 
+               [attr.required]="true" [attr.minlength]="16" [attr.maxlength]="16">
+        <div *ngIf="futsalLocation.invalid && (futsalLocation.dirty || futsalLocation.touched)" class="text-danger">
+            <small *ngIf="futsalLocation.errors?.['required']">Location is required.</small>
+            <small *ngIf="futsalLocation.errors?.['minlength']">Location must be exactly 16 characters long.</small>
+            <small *ngIf="futsalLocation.errors?.['maxlength']">Location cannot exceed 16 characters.</small>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Contact Number</label>
+        <input class="form-control form-control-lg" placeholder="10 Digit Number" 
+               #contactNumber="ngModel" name="contactNumber" 
+               [(ngModel)]="service.formData.contactNumber" [attr.required]="true" [attr.minlength]="10" [attr.maxlength]="10">
+        <div *ngIf="contactNumber.invalid && (contactNumber.dirty || contactNumber.touched)" class="text-danger">
+            <small *ngIf="contactNumber.errors?.['required']">Contact Number is required.</small>
+            <small *ngIf="contactNumber.errors?.['minlength']">Contact Number must be 10 digits.</small>
+            <small *ngIf="contactNumber.errors?.['maxlength']">Contact Number cannot exceed 10 digits.</small>
+        </div>
+    </div>
+
+    <div class="mb-3 col-6">
+        <label>Email</label>
+        <input class="form-control form-control-lg" placeholder="Email" type="email" 
+               #email="ngModel" name="email" 
+               [(ngModel)]="service.formData.email" [attr.required]="true" [attr.email]="true">
+        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+            <small *ngIf="email.errors?.['required']">Email is required.</small>
+            <small *ngIf="email.errors?.['email']">Please enter a valid email address.</small>
+        </div>
+    </div>
+
+    <div class="mb-3 col-12">
+        <label>Description</label>
+        <textarea class="form-control form-control-lg" placeholder="Enter a description" 
+                  #description="ngModel" name="description" 
+                  [(ngModel)]="service.formData.description" [attr.required]="true" [attr.minlength]="10" [attr.maxlength]="500"></textarea>
+        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger">
+            <small *ngIf="description.errors?.['required']">Description is required.</small>
+            <small *ngIf="description.errors?.['minlength']">Description must be at least 10 characters long.</small>
+            <small *ngIf="description.errors?.['maxlength']">Description cannot exceed 500 characters.</small>
+        </div>
+    </div>
+    
+    <div class="d-grid">
+        <button class="btn btn-lg btn-success" type="submit" [disabled]="form.invalid">
+          Submit
+        </button>
+    </div>
+</form>

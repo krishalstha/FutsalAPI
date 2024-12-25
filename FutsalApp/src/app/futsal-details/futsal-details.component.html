@@ -1,0 +1,42 @@
+<div class="row mt-5">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h2 class="mb-4">Futsal Details</h2>
+            <app-futsal-detail-form></app-futsal-detail-form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h2 class="mb-4">List of Futsals</h2>
+            <div class="table-responsive">
+                <table class="table table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th>Futsal Name</th>
+                            <th>Phone Number</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let add of futsalService.list">
+                            <td>{{add.FutsalName}}</td>
+                            <td>{{add.PhoneNumber}}</td>
+                            <td>{{add.Date}}</td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-danger btn-sm me-2" (click)="onDelete(add.futsalId)">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                    <button class="btn btn-warning btn-sm" (click)="populateForm(add)">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
