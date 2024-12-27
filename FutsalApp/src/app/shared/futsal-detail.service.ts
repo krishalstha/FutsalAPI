@@ -4,23 +4,30 @@ import { Observable } from 'rxjs';
 import { FutsalDetail } from './futsal-detail';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FutsalDetailService {
-
   private apiUrl = 'http://your-api-url'; // Replace with your actual API URL
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
-  // Post a new futsal detail
-  postFutsalDetail(futsalDetail: FutsalDetail): Observable<FutsalDetail[]> {
-    return this.httpClient.post<FutsalDetail[]>(this.apiUrl, futsalDetail);
+  // Create (POST) a new futsal detail
+  postFutsalDetail(futsalDetail: FutsalDetail): Observable<FutsalDetail> {
+    return this.httpClient.post<FutsalDetail>(`${this.apiUrl}/create`, futsalDetail);
   }
 
-  // Put (update) an existing futsal detail
-  putFutsalDetail(futsalDetail: FutsalDetail): Observable<FutsalDetail[]> {
-    return this.httpClient.put<FutsalDetail[]>(`${this.apiUrl}/${futsalDetail.futsalDetailId}`, futsalDetail);
+  // Read (GET) all futsal details
+  getFutsalDetails(): Observable<FutsalDetail[]> {
+    return this.httpClient.get<FutsalDetail[]>(`${this.apiUrl}/list`);
   }
 
-  // Other methods for fetching or deleting futsal details
+  // Update (PUT) an existing futsal detail
+  putFutsalDetail(futsalDetail: FutsalDetail): Observable<FutsalDetail> {
+    return this.httpClient.put<FutsalDetail>(`${this.apiUrl}/update/${futsalDetail.futsalDetailId}`, futsalDetail);
+  }
+
+  // Delete (DELETE) a futsal detail by ID
+  deleteFutsalDetail(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiUrl}/delete/${id}`);
+  }
 }

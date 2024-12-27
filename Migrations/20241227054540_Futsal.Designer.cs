@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FutsalAPI.Migrations
 {
     [DbContext(typeof(FutsalDbContext))]
-    [Migration("20241223083112_FutsalInit")]
-    partial class FutsalInit
+    [Migration("20241227054540_Futsal")]
+    partial class Futsal
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,14 @@ namespace FutsalAPI.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("operationHours")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("pricing")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(15)");
 
                     b.HasKey("FutsalId");
 

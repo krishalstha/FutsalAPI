@@ -49,6 +49,14 @@ namespace FutsalAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("operationHours")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("pricing")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(15)");
+
                     b.HasKey("FutsalId");
 
                     b.ToTable("FutsalDetail");

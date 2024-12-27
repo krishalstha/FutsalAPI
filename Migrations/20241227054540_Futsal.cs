@@ -5,7 +5,7 @@
 namespace FutsalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class FutsalInit : Migration
+    public partial class Futsal : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,9 @@ namespace FutsalAPI.Migrations
                     Location = table.Column<string>(type: "nvarchar(200)", nullable: false),
                     ContactNumber = table.Column<string>(type: "nvarchar(15)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(500)", nullable: false),
+                    pricing = table.Column<string>(type: "nvarchar(15)", nullable: false),
+                    operationHours = table.Column<string>(type: "nvarchar(15)", nullable: false)
                 },
                 constraints: table =>
                 {

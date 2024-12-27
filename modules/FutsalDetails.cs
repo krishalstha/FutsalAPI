@@ -23,5 +23,11 @@ namespace FutsalAPI.modules
 
         [Column(TypeName = "nvarchar(500)")]
         public string Description { get; set; } = "";
+
+        [Column(TypeName = "nvarchar(15)")]
+        public string pricing { get; set; } = "";
+
+        [Column(TypeName = "nvarchar(15)")]
+        public string operationHours { get; set; } = "";
     }
 }
