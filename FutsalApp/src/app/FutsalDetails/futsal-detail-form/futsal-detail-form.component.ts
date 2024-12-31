@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule, NgForm, Validators } from '@angular/forms'; // Add Validators import
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FutsalDetail } from '../../shared/futsal-detail';
@@ -8,7 +8,7 @@ import { FutsalDetailService } from '../../shared/futsal-detail.service';
 @Component({
   selector: 'app-futsal-detail-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],  // Already correctly added CommonModule and FormsModule
+  imports: [CommonModule, FormsModule], // Already correctly added CommonModule and FormsModule
   templateUrl: './futsal-detail-form.component.html',
   styles: [],
 })
@@ -31,7 +31,7 @@ export class FutsalDetailFormComponent {
       email: '',
       description: '',
       pricing: '',
-      operatingHours:'',
+      operatingHours: '',
     };
   }
 
@@ -81,5 +81,33 @@ export class FutsalDetailFormComponent {
     form.resetForm(); // Reset Angular form
     this.formData = this.initializeFormData(); // Reset formData
     this.formSubmitted = false;
+  }
+
+  // Restrict contact number input to numeric only and update the model
+  onNumberInput(event: any): void {
+    let input = event.target.value;
+  
+    // Allow only numeric characters and update the input
+    input = input.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+    
+    // Restrict to 10 digits
+    if (input.length > 10) {
+      input = input.slice(0, 10); // Truncate to 10 digits
+    }
+  
+    // Update the model
+    event.target.value = input;
+    this.formData.contactNumber = input;
+  }
+
+  // Validate the contact number (ensure it contains only digits and is exactly 10 characters long)
+  validateContactNumber(contactNumber: any): void {
+    if (contactNumber.control) {
+      contactNumber.control.setValidators([
+        Validators.required,
+        Validators.pattern('^[0-9]{10}$'), // Only numeric and exactly 10 digits
+      ]);
+      contactNumber.control.updateValueAndValidity();
+    }
   }
 }

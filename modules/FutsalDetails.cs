@@ -1,28 +1,34 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.RegularExpressions;
 
 namespace FutsalAPI.modules
 {
     public class FutsalDetail
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FutsalId { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(100)")]
-        public string Name { get; set; } = "";
+        public string futsalName { get; set; } = "";
 
         [Column(TypeName = "nvarchar(200)")]
-        public string Location { get; set; } = "";
+        public string location { get; set; } = "";
 
+        // ContactNumber: Ensure only numeric input and 10 digits
         [Column(TypeName = "nvarchar(15)")]
-        public string ContactNumber { get; set; } = "";
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Contact Number must be exactly 10 digits and numeric.")]
+        [Required(ErrorMessage = "Contact Number is required.")]
+        public string contactNumber { get; set; } = "";
 
         [Column(TypeName = "nvarchar(100)")]
-        public string Email { get; set; } = "";
+        [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
+        public string email { get; set; } = "";
 
         [Column(TypeName = "nvarchar(500)")]
-        public string Description { get; set; } = "";
+        public string description { get; set; } = "";
 
         [Column(TypeName = "nvarchar(15)")]
         public string pricing { get; set; } = "";

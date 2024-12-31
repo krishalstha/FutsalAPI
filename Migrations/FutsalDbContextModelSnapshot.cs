@@ -49,11 +49,11 @@ namespace FutsalAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("operationHours")
+                    b.Property<string>("OperationHours")
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<string>("pricing")
+                    b.Property<string>("Pricing")
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
 

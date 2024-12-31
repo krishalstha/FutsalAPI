@@ -13,10 +13,16 @@ builder.Services.AddDbContext<FutsalDbContext>(o => o.UseSqlServer(builder.Confi
 builder.Services.AddOpenApi();
 
 //services core
-builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+builder.Services.AddCors(options =>
 {
-    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-}));
+    options.AddPolicy("AllowSpecificOrigin", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200") // Specify the allowed origin
+              .AllowAnyMethod()                    // Allow all HTTP methods
+              .AllowAnyHeader()                    // Allow all headers
+              .AllowCredentials();                 // If using cookies/auth tokens
+    });
+});
 
 var app = builder.Build();
 
@@ -29,6 +35,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowSpecificOrigin"); // Use the specified CORS policy
 app.UseRouting();
 app.UseAuthorization();
 app.MapControllers();

@@ -1,11 +1,17 @@
 <div class="row mt-5">
-  <div class="col-md-6">
+  <div class="col-12">
     <div class="card p-4">
       <h2 class="mb-4">Futsal Details</h2>
-      <app-futsal-detail-form></app-futsal-detail-form> <!-- Use the form component -->
+      <app-futsal-detail-form></app-futsal-detail-form>
     </div>
   </div>
-  <div class="col-md-6">
+</div>
+
+
+
+
+<div class="row mt-4">
+  <div class="col-12">
     <div class="card p-4">
       <h2 class="mb-4">List of Futsals</h2>
       <div class="table-responsive">
@@ -15,18 +21,18 @@
               <th>Futsal Name</th>
               <th>Phone Number</th>
               <th>Email</th>
-              <th>Pricing</th> <!-- Added Pricing column -->
-              <th>Operation Hours</th> <!-- Added Operation Hours column -->
+              <th>Pricing</th>
+              <th>Operation Hours</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let futsal of futsalList">
-              <td>{{ futsal.futsalName }}</td> <!-- Updated from futsal.name to futsal.futsalName -->
+              <td>{{ futsal.futsalName }}</td>
               <td>{{ futsal.contactNumber }}</td>
               <td>{{ futsal.email }}</td>
-              <td>{{ futsal.pricing }}</td> <!-- Display Pricing -->
-              <td>{{ futsal.operatingHours }}</td> <!-- Display Operation Hours -->
+              <td>{{ futsal.pricing }}</td>
+              <td>{{ futsal.operatingHours }}</td>
               <td class="text-center">
                 <div class="btn-group" role="group">
                   <button class="btn btn-danger btn-sm me-2" (click)="onDelete(futsal.futsalDetailId ?? 0)">
@@ -43,4 +49,10 @@
       </div>
     </div>
   </div>
-</div>
+</div> 
+
+
+
+
+
+

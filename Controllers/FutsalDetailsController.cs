@@ -10,7 +10,7 @@ using FutsalAPI.modules;
 
 namespace FutsalAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/FutsalDetails")] // Explicit route to avoid mismatch issues
     [ApiController]
     public class FutsalDetailsController : ControllerBase
     {
@@ -43,7 +43,6 @@ namespace FutsalAPI.Controllers
         }
 
         // PUT: api/FutsalDetails/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFutsalDetail(int id, FutsalDetail futsalDetail)
         {
@@ -74,15 +73,40 @@ namespace FutsalAPI.Controllers
         }
 
         // POST: api/FutsalDetails
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<FutsalDetail>> PostFutsalDetail(FutsalDetail futsalDetail)
-        {
-            _context.FutsalDetail.Add(futsalDetail);
-            await _context.SaveChangesAsync();
+      [HttpPost]
+public async Task<ActionResult<FutsalDetail>> PostFutsalDetail(FutsalDetail futsalDetail)
+{
+    if (futsalDetail == null)
+    {
+        return BadRequest("Futsal details cannot be null.");
+    }
 
-            return CreatedAtAction("GetFutsalDetail", new { id = futsalDetail.FutsalId }, futsalDetail);
-        }
+    try
+    {
+        // Allow manual ID insertion if necessary
+        await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT FutsalDetail ON");
+
+        // Add the futsal detail and save the changes
+        _context.FutsalDetail.Add(futsalDetail);
+        await _context.SaveChangesAsync();
+
+        // Return the created futsal detail with a 201 status
+        return CreatedAtAction(nameof(GetFutsalDetail), new { id = futsalDetail.FutsalId }, futsalDetail);
+    }
+    catch (Exception ex)
+    {
+        // Log the exception (you can use a logger here)
+        // _logger.LogError(ex, "Error occurred while adding futsal detail.");
+
+        return StatusCode(500, "Internal server error occurred while processing the request.");
+    }
+    finally
+    {
+        // Disable IDENTITY_INSERT after inserting
+        await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT FutsalDetail OFF");
+    }
+}
+
 
         // DELETE: api/FutsalDetails/5
         [HttpDelete("{id}")]

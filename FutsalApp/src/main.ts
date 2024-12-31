@@ -1,6 +1,27 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
+import { importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app/app.component';
+import { FutsalDetailsComponent } from './app/futsal-details/futsal-details.component';
+import { FutsalDetailFormComponent } from './app/FutsalDetails/futsal-detail-form/futsal-detail-form.component';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { FormsModule } from '@angular/forms';
+import { provideZoneChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { routes } from './app/app.routes';  // Import your routes configuration
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+// Bootstrap the application with standalone components
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(
+      HttpClientModule,  // Import necessary modules
+      BrowserAnimationsModule,
+      FormsModule,
+      ToastrModule.forRoot(),
+    ),
+    provideZoneChangeDetection({ eventCoalescing: true }), // Enable event coalescing for performance optimization
+    provideRouter(routes),  // Set up routing
+  ],
+})
+  .catch((err) => console.error('Bootstrap error:', err));  // Handle any bootstrap errors

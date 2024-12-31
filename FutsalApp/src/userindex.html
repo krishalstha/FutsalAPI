@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futsal Booking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Container for the entire header */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Vertically align items in the center */
+            width: 100%;
+            padding: 20px;
+        }
+
+        /* Styling the navbar */
+        #navbar {
+            display: flex;
+            justify-content: center; /* Center the navbar items */
+            flex-grow: 1; /* Allow navbar to take up remaining space */
+            width: 100%;
+        }
+
+        #navbar ul {
+            display: flex; /* Display items in a row */
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        #navbar li {
+            margin: 0 15px; /* Add space between items */
+            font-size: 18px;
+        }
+
+        /* Styling for form (Register/Login) */
+        #form {
+            display: flex;
+            justify-content: flex-end; /* Align Register and Login to the right */
+        }
+
+        #form ul {
+            display: flex;
+            padding: 0;
+            margin: 0;
+        }
+
+        #form li {
+            list-style: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+
+        /* Logo styling */
+        .logo h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        /* Top bar for email and location */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .top-bar div {
+            padding: 5px 15px;
+        }
+
+        /* Search bar container */
+        #search-bar-container {
+            width: 100%;
+            display: flex;
+            justify-content: center; /* Center the search bar */
+            margin-top: 10px;
+        }
+
+        /* Search bar input */
+        #search-bar {
+            width: 60%;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            outline: none;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+        }
+
+        /* Placeholder text */
+        #search-bar::placeholder {
+            color: #888;
+            font-style: italic;
+        }
+
+        /* Icon inside the search bar */
+        #search-bar-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #888;
+        }
+
+        /* Hover and focus effects */
+        #search-bar:hover,
+        #search-bar:focus {
+            border-color: #5c8df6; /* Highlight border on focus */
+        }
+
+        #search-bar:focus::placeholder {
+            color: transparent; /* Hide placeholder text on focus */
+        }
+
+        /* Search icon container */
+        .search-icon-container {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- New top bar for email and location -->
+    <div class="top-bar">
+        <div>Email: example@example.com</div>
+        <div>Location: Kathmandu, Nayabazar</div>
+    </div>
+
+    <!-- Header container with logo, navbar, and form -->
+    <div class="header-container">
+        <!-- Logo on the left -->
+        <div class="logo">
+            <h2>Logo</h2>
+        </div>
+
+        <!-- Navbar in the middle -->
+        <div id="navbar">
+            <ul>
+                <li><i class="fas fa-home"></i> Home</li>
+                <li><i class="fas fa-phone-alt"></i> Contact</li>
+                <li><i class="fas fa-futbol"></i> Futsal</li>
+                <li><i class="fas fa-info-circle"></i> About</li>
+            </ul>
+        </div>
+
+        <!-- Register and Login on the right -->
+        <div id="form">
+            <ul>
+                <li>Register</li>
+                <li>Login</li>
+            </ul>
+        </div>
+    </div>
+<hr>
+    <!-- Search bar positioned below the navbar -->
+    <div id="search-bar-container">
+        <input type="text" id="search-bar" placeholder="Search...">
+    </div>
+</body>
+</html>

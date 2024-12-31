@@ -21,8 +21,8 @@ namespace FutsalAPI.Migrations
                     ContactNumber = table.Column<string>(type: "nvarchar(15)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", nullable: false),
-                    pricing = table.Column<string>(type: "nvarchar(15)", nullable: false),
-                    operationHours = table.Column<string>(type: "nvarchar(15)", nullable: false)
+                    Pricing = table.Column<string>(type: "nvarchar(15)", nullable: false),
+                    OperationHours = table.Column<string>(type: "nvarchar(15)", nullable: false)
                 },
                 constraints: table =>
                 {

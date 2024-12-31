@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FutsalAPI.Migrations
 {
     [DbContext(typeof(FutsalDbContext))]
-    [Migration("20241227054540_Futsal")]
+    [Migration("20241230095904_Futsal")]
     partial class Futsal
     {
         /// <inheritdoc />
@@ -52,11 +52,11 @@ namespace FutsalAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("operationHours")
+                    b.Property<string>("OperationHours")
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<string>("pricing")
+                    b.Property<string>("Pricing")
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
