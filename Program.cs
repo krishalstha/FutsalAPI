@@ -4,23 +4,21 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<FutsalDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("FutsalConnection")));
-builder.Services.AddOpenApi();
+builder.Services.AddDbContext<FutsalDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("FutsalConnection"))
+);
 
-//services core
+// Add CORS policy to allow all origins.
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin", policy =>
+    options.AddPolicy("AllowAllOrigins", builder =>
     {
-        policy.WithOrigins("http://localhost:4200") // Specify the allowed origin
-              .AllowAnyMethod()                    // Allow all HTTP methods
-              .AllowAnyHeader()                    // Allow all headers
-              .AllowCredentials();                 // If using cookies/auth tokens
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
     });
 });
 
@@ -31,12 +29,27 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.MapOpenApi();
 }
 
+// Force HTTPS for all requests.
 app.UseHttpsRedirection();
-app.UseCors("AllowSpecificOrigin"); // Use the specified CORS policy
+
+// Enable CORS policy.
+app.UseCors("AllowAllOrigins");
+
+// Enable routing.
 app.UseRouting();
+
+// Add Authorization middleware (if applicable).
 app.UseAuthorization();
+
+// Map controllers to handle API requests.
 app.MapControllers();
+
+// Redirect root URL to Swagger UI.
+app.MapGet("/", async context =>
+{
+    context.Response.Redirect("/swagger/index.html", permanent: false);
+});
+
 app.Run();

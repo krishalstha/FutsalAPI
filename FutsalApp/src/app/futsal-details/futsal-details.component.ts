@@ -14,6 +14,7 @@ import { FutsalDetailFormComponent } from "../FutsalDetails/futsal-detail-form/f
 export class FutsalDetailsComponent {
 
   futsalList: FutsalDetail[] = []; // List to store futsal details
+  selectedFutsal: FutsalDetail | null = null; // Futsal detail selected for editing
 
   constructor(
     private futsalService: FutsalDetailService, // Service to handle futsal data
@@ -41,33 +42,80 @@ export class FutsalDetailsComponent {
   }
 
   /**
-   * Deletes a futsal detail by ID after confirmation.
-   * @param id - ID of the futsal detail to delete
-   */
-  onDelete(id: number): void {
-    const deleteConfirmation = confirm('Are you sure you want to delete this futsal detail? This action cannot be undone.');
-    if (deleteConfirmation) {
-      this.futsalService.deleteFutsalDetail(id).subscribe({
-        next: () => {
-          this.futsalList = this.futsalList.filter(f => f.futsalDetailId !== id);
-          this.toastr.success('Futsal detail deleted successfully.', 'Delete');
-        },
-        error: (err: any) => {
-          console.error('Error deleting futsal detail:', err);
-          this.toastr.error('Failed to delete the futsal detail.', 'Delete Error');
-        },
-      });
-    }
-  }
-
-  /**
    * Populates the form with futsal detail data for editing.
    * @param futsal - Futsal detail to populate in the form
    */
   populateForm(futsal: FutsalDetail): void {
-    // For now, this will log the futsal data for editing, you can handle the form population elsewhere
-    console.log('Populating form with futsal data:', futsal);
-    // If the form component needs to be handled here, you can pass the futsal object
-    // to it via an input or service.
+    this.selectedFutsal = { ...futsal }; // Create a copy of the selected futsal for editing
+    console.log('Populating form with futsal data:', this.selectedFutsal);
+  }
+
+  /**
+   * Updates the selected futsal detail.
+   * @param updatedFutsal - Updated futsal detail object
+   */
+  onUpdate(updatedFutsal: FutsalDetail): void {
+    if (!updatedFutsal || !updatedFutsal.futsalId) {
+      console.error('Invalid futsal detail for update:', updatedFutsal);
+      this.toastr.error('Invalid futsal detail. Please try again.', 'Update Error');
+      return;
+    }
+
+    this.futsalService.putFutsalDetail(updatedFutsal).subscribe({
+      next: () => {
+        console.log('Futsal detail updated successfully:', updatedFutsal);
+        this.toastr.success('Futsal detail updated successfully.', 'Update Success');
+        this.selectedFutsal = null; // Clear the selected futsal
+        this.loadFutsalList(); // Reload the list after the update
+      },
+      error: (err) => {
+        console.error('Error updating futsal detail:', err);
+        this.toastr.error('Failed to update futsal detail. Please try again.', 'Update Error');
+      },
+    });
+  }
+
+  /**
+   * Cancels the edit operation.
+   */
+  cancelEdit(): void {
+    this.selectedFutsal = null; // Clear the selected futsal
+    console.log('Edit operation cancelled.');
+  }
+
+  /**
+   * Deletes a futsal detail by ID after confirmation.
+   * @param futsalDetailId - ID of the futsal detail to delete
+   */
+  onDelete(futsalDetailId: number): void {
+    if (!futsalDetailId || isNaN(futsalDetailId)) {
+      console.error('Invalid ID for delete operation:', futsalDetailId);
+      this.toastr.error('Invalid futsal detail ID. Please refresh and try again.', 'Delete Error');
+      return;
+    }
+
+    const deleteConfirmation = confirm(
+      'Are you sure you want to delete this futsal detail? This action cannot be undone.'
+    );
+
+    if (deleteConfirmation) {
+      this.futsalService.deleteFutsalDetail(futsalDetailId).subscribe({
+        next: () => {
+          console.log('Futsal detail deleted successfully.');
+          this.toastr.success('Futsal detail deleted successfully.', 'Delete Success');
+          this.loadFutsalList(); // Reload the list after deletion
+        },
+        error: (err) => {
+          console.error('Error occurred while deleting futsal detail:', err);
+          if (err.status === 404) {
+            this.toastr.error('Futsal detail not found.', 'Delete Error');
+          } else if (err.status === 500) {
+            this.toastr.error('Server error occurred while deleting the futsal detail.', 'Delete Error');
+          } else {
+            this.toastr.error('Failed to delete the futsal detail. Please try again.', 'Delete Error');
+          }
+        },
+      });
+    }
   }
 }

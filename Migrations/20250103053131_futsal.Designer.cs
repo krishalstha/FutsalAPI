@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FutsalAPI.Migrations
 {
     [DbContext(typeof(FutsalDbContext))]
-    [Migration("20241230095904_Futsal")]
-    partial class Futsal
+    [Migration("20250103053131_futsal")]
+    partial class futsal
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,31 +32,31 @@ namespace FutsalAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FutsalId"));
 
-                    b.Property<string>("ContactNumber")
+                    b.Property<string>("contactNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("description")
                         .IsRequired()
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("email")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Location")
+                    b.Property<string>("futsalName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("location")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("OperationHours")
+                    b.Property<string>("operationHours")
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<string>("Pricing")
+                    b.Property<string>("pricing")
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
 

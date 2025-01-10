@@ -5,7 +5,7 @@
 namespace FutsalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Futsal : Migration
+    public partial class futsal : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,13 +16,13 @@ namespace FutsalAPI.Migrations
                 {
                     FutsalId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(200)", nullable: false),
-                    ContactNumber = table.Column<string>(type: "nvarchar(15)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", nullable: false),
-                    Pricing = table.Column<string>(type: "nvarchar(15)", nullable: false),
-                    OperationHours = table.Column<string>(type: "nvarchar(15)", nullable: false)
+                    futsalName = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    location = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    contactNumber = table.Column<string>(type: "nvarchar(15)", nullable: false),
+                    email = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(500)", nullable: false),
+                    pricing = table.Column<string>(type: "nvarchar(15)", nullable: false),
+                    operationHours = table.Column<string>(type: "nvarchar(15)", nullable: false)
                 },
                 constraints: table =>
                 {

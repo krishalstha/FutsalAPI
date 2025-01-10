@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FutsalAPI.DataContext;
@@ -10,7 +9,7 @@ using FutsalAPI.modules;
 
 namespace FutsalAPI.Controllers
 {
-    [Route("api/FutsalDetails")] // Explicit route to avoid mismatch issues
+    [Route("api/FutsalDetails")]
     [ApiController]
     public class FutsalDetailsController : ControllerBase
     {
@@ -23,35 +22,47 @@ namespace FutsalAPI.Controllers
 
         // GET: api/FutsalDetails
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FutsalDetail>>> GetFutsalDetail()
+        public async Task<ActionResult<IEnumerable<FutsalDetail>>> GetFutsalDetails()
         {
             return await _context.FutsalDetail.ToListAsync();
         }
 
-        // GET: api/FutsalDetails/5
+        // GET: api/FutsalDetails/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<FutsalDetail>> GetFutsalDetail(int id)
         {
             var futsalDetail = await _context.FutsalDetail.FindAsync(id);
-
             if (futsalDetail == null)
             {
-                return NotFound();
+                return NotFound($"FutsalDetail with ID {id} not found.");
             }
 
             return futsalDetail;
         }
 
-        // PUT: api/FutsalDetails/5
+        // PUT: api/FutsalDetails/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFutsalDetail(int id, FutsalDetail futsalDetail)
+        public async Task<IActionResult> UpdateFutsalDetail(int id, FutsalDetail FutsalDetail)
         {
-            if (id != futsalDetail.FutsalId)
+            if (id != FutsalDetail.futsalId)
             {
-                return BadRequest();
+                return BadRequest("ID in the URL does not match the ID in the provided object.");
             }
 
-            _context.Entry(futsalDetail).State = EntityState.Modified;
+            var existingFutsalDetail = await _context.FutsalDetail.FindAsync(id);
+            if (existingFutsalDetail == null)
+            {
+                return NotFound($"FutsalDetail with ID {id} not found.");
+            }
+
+            // Update properties
+            existingFutsalDetail.futsalName = FutsalDetail.futsalName;
+            existingFutsalDetail.email = FutsalDetail.email;
+            existingFutsalDetail.location = FutsalDetail.location;
+            existingFutsalDetail.contactNumber = FutsalDetail.contactNumber;
+            existingFutsalDetail.pricing = FutsalDetail.pricing;
+            existingFutsalDetail.description = FutsalDetail.description;
+            existingFutsalDetail.operationHours = FutsalDetail.operationHours;
 
             try
             {
@@ -61,61 +72,54 @@ namespace FutsalAPI.Controllers
             {
                 if (!FutsalDetailExists(id))
                 {
-                    return NotFound();
+                    return NotFound($"FutsalDetail with ID {id} no longer exists.");
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
         }
 
         // POST: api/FutsalDetails
-      [HttpPost]
-public async Task<ActionResult<FutsalDetail>> PostFutsalDetail(FutsalDetail futsalDetail)
-{
-    if (futsalDetail == null)
-    {
-        return BadRequest("Futsal details cannot be null.");
-    }
+        [HttpPost]
+        public async Task<ActionResult<FutsalDetail>> PostFutsalDetail(FutsalDetail futsalDetail)
+        {
+            if (futsalDetail == null)
+            {
+                return BadRequest("Futsal details cannot be null.");
+            }
 
-    try
-    {
-        // Allow manual ID insertion if necessary
-        await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT FutsalDetail ON");
+            try
+            {
+                await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT FutsalDetail ON");
 
-        // Add the futsal detail and save the changes
-        _context.FutsalDetail.Add(futsalDetail);
-        await _context.SaveChangesAsync();
+                _context.FutsalDetail.Add(futsalDetail);
+                await _context.SaveChangesAsync();
 
-        // Return the created futsal detail with a 201 status
-        return CreatedAtAction(nameof(GetFutsalDetail), new { id = futsalDetail.FutsalId }, futsalDetail);
-    }
-    catch (Exception ex)
-    {
-        // Log the exception (you can use a logger here)
-        // _logger.LogError(ex, "Error occurred while adding futsal detail.");
+                return CreatedAtAction(nameof(GetFutsalDetail), new { id = futsalDetail.futsalId }, futsalDetail);
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, "Database error occurred while adding futsal detail.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An unexpected error occurred while processing the request.");
+            }
+            finally
+            {
+                await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT FutsalDetail OFF");
+            }
+        }
 
-        return StatusCode(500, "Internal server error occurred while processing the request.");
-    }
-    finally
-    {
-        // Disable IDENTITY_INSERT after inserting
-        await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT FutsalDetail OFF");
-    }
-}
-
-
-        // DELETE: api/FutsalDetails/5
+        // DELETE: api/FutsalDetails/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFutsalDetail(int id)
         {
             var futsalDetail = await _context.FutsalDetail.FindAsync(id);
             if (futsalDetail == null)
             {
-                return NotFound();
+                return NotFound($"FutsalDetail with ID {id} not found.");
             }
 
             _context.FutsalDetail.Remove(futsalDetail);
@@ -126,7 +130,7 @@ public async Task<ActionResult<FutsalDetail>> PostFutsalDetail(FutsalDetail futs
 
         private bool FutsalDetailExists(int id)
         {
-            return _context.FutsalDetail.Any(e => e.FutsalId == id);
+            return _context.FutsalDetail.Any(e => e.futsalId == id);
         }
     }
 }

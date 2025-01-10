@@ -6,9 +6,10 @@ namespace FutsalAPI.modules
 {
     public class FutsalDetail
     {
+        // Nullable FutsalId for cases when it is auto-generated or not required in the request body
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int FutsalId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]  // Auto-generate the ID on insert
+        public int? futsalId { get; set; }  // Make it nullable
 
         [Required]
         [Column(TypeName = "nvarchar(100)")]

@@ -35,11 +35,14 @@
               <td>{{ futsal.operatingHours }}</td>
               <td class="text-center">
                 <div class="btn-group" role="group">
-                  <button class="btn btn-danger btn-sm me-2" (click)="onDelete(futsal.futsalDetailId ?? 0)">
-                    <i class="fa-solid fa-trash"></i>
-                  </button>
-                  <button class="btn btn-warning btn-sm" (click)="populateForm(futsal)">
-                    <i class="fa-solid fa-pen-to-square"></i>
+                  <button 
+                   class="btn btn-danger btn-sm me-2" 
+                    (click)="onDelete(futsal.futsalId ?? 0)" 
+                      aria-label="Delete Futsal Detail">
+                        <i class="fa-solid fa-trash"></i> Delete
+                        </button>
+                  <button class="btn btn-warning btn-sm" (click)="populateForm(futsal)" aria-label="Edit Futsl Detail">
+                    <i class="fa-solid fa-pen-to-square"></i>Edit
                   </button>
                 </div>
               </td>

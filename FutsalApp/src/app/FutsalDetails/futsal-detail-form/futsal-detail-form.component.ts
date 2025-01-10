@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormsModule, NgForm, Validators } from '@angular/forms'; // Add Validators import
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FutsalDetail } from '../../shared/futsal-detail';
@@ -8,24 +8,29 @@ import { FutsalDetailService } from '../../shared/futsal-detail.service';
 @Component({
   selector: 'app-futsal-detail-form',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Already correctly added CommonModule and FormsModule
+  imports: [CommonModule, FormsModule],
   templateUrl: './futsal-detail-form.component.html',
   styles: [],
 })
-export class FutsalDetailFormComponent {
+export class FutsalDetailFormComponent implements OnChanges {
   formSubmitted: boolean = false;
   formData: FutsalDetail = this.initializeFormData();
+
+  @Input() futsalForEdit: FutsalDetail | null = null;
+
 
   constructor(
     private futsalService: FutsalDetailService,
     private toastr: ToastrService
   ) {}
 
-  // Initialize default form data
+  /**
+   * Initialize default form data.
+   */
   private initializeFormData(): FutsalDetail {
     return {
-      futsalDetailId: null,
-      futsalName: '',
+      futsalId: null,
+      futsalName: '',  // updated from futsalDetail to futsalName
       location: '',
       contactNumber: '',
       email: '',
@@ -35,21 +40,75 @@ export class FutsalDetailFormComponent {
     };
   }
 
-  // Handle form submission
-  onSubmit(form: NgForm) {
-    this.formSubmitted = true;
-
-    if (form.valid) {
-      this.formData.futsalDetailId == null
-        ? this.insertRecord(form)
-        : this.updateRecord(form);
-    } else {
-      this.toastr.error('Please fill all the required fields.', 'Form Error');
+  /**
+   * Populate the form with selected futsal details for editing.
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['futsalForEdit'] && this.futsalForEdit) { // Use bracket notation
+      console.log('Populating form with futsal data:', this.futsalForEdit);
+      this.formData = { ...this.futsalForEdit };  // Populate form with the futsal being edited
     }
   }
+  
+  
 
-  // Insert new record
-  private insertRecord(form: NgForm) {
+  /**
+   * Handle form submission.
+   */
+  onSubmit(form: NgForm): void {
+    console.log('Form data before submission:', form.value);
+    this.formSubmitted = true;
+
+    if (this.isFormValid(form)) return;
+
+      if(this.formData.futsalId){
+        this.updateRecord(form)
+      }else{
+        this.insertRecord(form);
+    } 
+  }
+
+  /**
+   * Validate the form.
+   */
+  private isFormValid(form: NgForm): boolean {
+    if (!form.valid) {
+      this.toastr.error('Please fill all the required fields.', 'Form Error');
+      return false;
+    }
+
+    if (!this.formData.futsalName.trim()) {  // updated field name
+      this.toastr.error('Futsal Name is required.', 'Validation Error');
+      return false;
+    }
+
+    if (!/^\d{10}$/.test(this.formData.contactNumber)) {
+      this.toastr.error('Contact number must be exactly 10 digits.', 'Validation Error');
+      return false;
+    }
+
+    if (!this.isEmailValid(this.formData.email)) {
+      this.toastr.error('Please provide a valid email address.', 'Validation Error');
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Check if an email is valid.
+   */
+  private isEmailValid(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  /**
+   * Insert a new record.
+   */
+  private insertRecord(form: NgForm): void {
+    console.log('Payload being sent:', this.formData);
+
     this.futsalService.postFutsalDetail(this.formData).subscribe({
       next: () => {
         this.toastr.success('Record inserted successfully!', 'Futsal Detail');
@@ -62,8 +121,12 @@ export class FutsalDetailFormComponent {
     });
   }
 
-  // Update existing record
-  private updateRecord(form: NgForm) {
+  /**
+   * Update an existing record.
+   */
+  private updateRecord(form: NgForm): void {
+    console.log('Payload being sent for update:', this.formData);
+
     this.futsalService.putFutsalDetail(this.formData).subscribe({
       next: () => {
         this.toastr.info('Record updated successfully!', 'Futsal Detail');
@@ -76,38 +139,21 @@ export class FutsalDetailFormComponent {
     });
   }
 
-  // Reset the form and clear data
-  private resetForm(form: NgForm) {
-    form.resetForm(); // Reset Angular form
-    this.formData = this.initializeFormData(); // Reset formData
+  /**
+   * Reset the form.
+   */
+  private resetForm(form: NgForm): void {
+    form.resetForm();
+    this.formData = this.initializeFormData();
     this.formSubmitted = false;
   }
 
-  // Restrict contact number input to numeric only and update the model
-  onNumberInput(event: any): void {
-    let input = event.target.value;
-  
-    // Allow only numeric characters and update the input
-    input = input.replace(/[^0-9]/g, ''); // Remove non-numeric characters
-    
-    // Restrict to 10 digits
-    if (input.length > 10) {
-      input = input.slice(0, 10); // Truncate to 10 digits
-    }
-  
-    // Update the model
-    event.target.value = input;
+  /**
+   * Restrict contact number input to numeric only and limit to 10 digits.
+   */
+  onNumberInput(event: Event): void {
+    const input = (event.target as HTMLInputElement).value.replace(/[^0-9]/g, '').slice(0, 10);
+    (event.target as HTMLInputElement).value = input;
     this.formData.contactNumber = input;
-  }
-
-  // Validate the contact number (ensure it contains only digits and is exactly 10 characters long)
-  validateContactNumber(contactNumber: any): void {
-    if (contactNumber.control) {
-      contactNumber.control.setValidators([
-        Validators.required,
-        Validators.pattern('^[0-9]{10}$'), // Only numeric and exactly 10 digits
-      ]);
-      contactNumber.control.updateValueAndValidity();
-    }
   }
 }

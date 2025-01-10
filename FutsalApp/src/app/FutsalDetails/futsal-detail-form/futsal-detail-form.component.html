@@ -143,6 +143,6 @@
 
   <!-- Submit Button -->
   <div class="d-grid">
-    <button class="btn btn-success btn-lg" type="submit" [disabled]="form.invalid">Submit</button>
+    <button class="btn btn-success btn-lg" type="submit" [disabled]="form.invalid || formSubmitted">Submit</button>
   </div>
 </form>
