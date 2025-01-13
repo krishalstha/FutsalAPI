@@ -49,7 +49,8 @@ export class FutsalDetailsComponent {
     this.selectedFutsal = { ...futsal }; // Create a copy of the selected futsal for editing
     console.log('Populating form with futsal data:', this.selectedFutsal);
   }
-
+  
+  
   /**
    * Updates the selected futsal detail.
    * @param updatedFutsal - Updated futsal detail object

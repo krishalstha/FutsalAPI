@@ -10,7 +10,7 @@ import { FutsalDetail } from './futsal-detail';
 export class FutsalDetailService {
   private apiUrl = 'https://localhost:5001/api/FutsalDetails'; // API base URL
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   /**
    * Create (POST) a new futsal detail.
@@ -19,7 +19,7 @@ export class FutsalDetailService {
    */
   postFutsalDetail(futsalDetail: FutsalDetail): Observable<FutsalDetail> {
     console.log('POST Request - Payload being sent:', futsalDetail); // Debugging
-    return this.httpClient
+    return this.http
       .post<FutsalDetail>(this.apiUrl, futsalDetail)
       .pipe(catchError((error) => this.handleError(error, 'POST', futsalDetail)));
   }
@@ -30,7 +30,7 @@ export class FutsalDetailService {
    */
   getFutsalDetails(): Observable<FutsalDetail[]> {
     console.log('GET Request - Fetching all futsal details'); // Debugging
-    return this.httpClient
+    return this.http
       .get<FutsalDetail[]>(this.apiUrl)
       .pipe(catchError((error) => this.handleError(error, 'GET')));
   }
@@ -42,7 +42,7 @@ export class FutsalDetailService {
    */
   getFutsalDetailById(id: number): Observable<FutsalDetail> {
     console.log(`GET Request - Fetching futsal detail with ID: ${id}`); // Debugging
-    return this.httpClient
+    return this.http
       .get<FutsalDetail>(`${this.apiUrl}/${id}`)
       .pipe(catchError((error) => this.handleError(error, 'GET', { id })));
   }
@@ -57,9 +57,13 @@ export class FutsalDetailService {
       `PUT Request - Updating futsal detail with ID: ${futsalDetail.futsalId}`,
       futsalDetail
     ); // Debugging
-    return this.httpClient
+    return this.http
       .put<FutsalDetail>(`${this.apiUrl}/${futsalDetail.futsalId}`, futsalDetail)
       .pipe(catchError((error) => this.handleError(error, 'PUT', futsalDetail)));
+  }
+   // PUT request to update futsal details
+   updateFutsalDetail(futsalId: string, futsalData: FutsalDetail): Observable<FutsalDetail> {
+    return this.http.put<FutsalDetail>(`${this.apiUrl}/${futsalId}`, futsalData);
   }
 
   /**
@@ -69,7 +73,7 @@ export class FutsalDetailService {
    */
   deleteFutsalDetail(id: number): Observable<void> {
     console.log(`DELETE Request - Deleting futsal detail with ID: ${id}`); // Debugging
-    return this.httpClient
+    return this.http
       .delete<void>(`${this.apiUrl}/${id}`)
       .pipe(catchError((error) => this.handleError(error, 'DELETE', { id })));
   }

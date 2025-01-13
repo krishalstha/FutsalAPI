@@ -18,7 +18,6 @@ export class FutsalDetailFormComponent implements OnChanges {
 
   @Input() futsalForEdit: FutsalDetail | null = null;
 
-
   constructor(
     private futsalService: FutsalDetailService,
     private toastr: ToastrService
@@ -30,7 +29,7 @@ export class FutsalDetailFormComponent implements OnChanges {
   private initializeFormData(): FutsalDetail {
     return {
       futsalId: null,
-      futsalName: '',  // updated from futsalDetail to futsalName
+      futsalName: '',
       location: '',
       contactNumber: '',
       email: '',
@@ -44,40 +43,40 @@ export class FutsalDetailFormComponent implements OnChanges {
    * Populate the form with selected futsal details for editing.
    */
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['futsalForEdit'] && this.futsalForEdit) { // Use bracket notation
+    if (changes['futsalForEdit'] && this.futsalForEdit) {
       console.log('Populating form with futsal data:', this.futsalForEdit);
-      this.formData = { ...this.futsalForEdit };  // Populate form with the futsal being edited
+      this.formData = { ...this.futsalForEdit }; // Populate form with the futsal being edited
     }
   }
-  
-  
 
   /**
    * Handle form submission.
    */
   onSubmit(form: NgForm): void {
-    console.log('Form data before submission:', form.value);
+    if (this.formSubmitted) return; // Prevent duplicate submissions
     this.formSubmitted = true;
 
-    if (this.isFormValid(form)) return;
+    if (!this.isFormValid(form)) {
+      this.formSubmitted = false; // Allow resubmission after fixing errors
+      return;
+    }
 
-      if(this.formData.futsalId){
-        this.updateRecord(form)
-      }else{
-        this.insertRecord(form);
-    } 
+    this.formData.futsalId ? this.updateRecord(form) : this.insertRecord(form);
   }
 
   /**
    * Validate the form.
    */
   private isFormValid(form: NgForm): boolean {
+    console.log('Form Validity:', form.valid);
+    console.log('Form Data:', this.formData);
+
     if (!form.valid) {
       this.toastr.error('Please fill all the required fields.', 'Form Error');
       return false;
     }
 
-    if (!this.formData.futsalName.trim()) {  // updated field name
+    if (!this.formData.futsalName.trim()) {
       this.toastr.error('Futsal Name is required.', 'Validation Error');
       return false;
     }
@@ -136,6 +135,7 @@ export class FutsalDetailFormComponent implements OnChanges {
         console.error('Update Error:', err);
         this.toastr.error('Failed to update the record.', 'Update Error');
       },
+      complete: () => (this.formSubmitted = false),
     });
   }
 
