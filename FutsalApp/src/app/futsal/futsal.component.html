@@ -1,0 +1,21 @@
+<app-home></app-home>
+<br>
+<br>
+<br>
+<div class="container">
+    
+    <div class="container">
+        <div *ngFor="let futsal of futsalDetails" class="futsal-card">
+          <h2>{{ futsal.futsalName }}</h2>
+          <p><strong>Location:</strong> {{ futsal.location }}</p>
+          <p><strong>Contact:</strong> {{ futsal.contactNumber }}</p>
+          <p><strong>Pricing:</strong> {{ futsal.pricing }}</p>
+          <p><strong>Opening Hours:</strong> {{ futsal.operationHours }}</p>
+          <p><strong>Email:</strong> {{ futsal.email }}</p>
+          <p><strong>Description:</strong> {{ futsal.description }}</p>
+          <button (click)="goToBooking(futsal)">Book Now</button>
+        </div>
+      </div>    
+      
+      
+

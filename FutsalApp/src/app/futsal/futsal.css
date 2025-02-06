@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between; /* Distribute items evenly */
+    gap: 20px;
+    flex-wrap: wrap; /* Allow items to wrap onto the next line */
+}
+
+.futsal-card {
+    width: 30%; /* Set width to 30% to display 3 cards in a row */
+    position: relative;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Add margin for spacing between rows */
+}
+
+.futsal-card img {
+    width: 100%; /* Set width to 100% of the card's width */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Ensure it's displayed as a block element */
+    margin: 0 auto; /* Center the image horizontally */
+}
+
+.booking-info {
+    padding: 15px;
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    text-align: left;
+}
+
+.booking-info h2 {
+    margin-top: 0;
+}
+
+.futsal-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+button {
+    background-color: #007bff; /* Button background color */
+    color: white; /* Text color */
+    font-size: 16px; /* Text size */
+    padding: 10px 20px; /* Padding inside the button */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    margin-top: 15px; /* Add some spacing between text and button */
+    width: 100%; /* Make button take the full width of the card */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darken button on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+button:focus {
+    outline: none; /* Remove the focus outline */
+}
