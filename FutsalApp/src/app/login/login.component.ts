@@ -91,7 +91,7 @@ export class LoginComponent {
     this.close(); // Close current dialog
     this.dialog.open(RegisterComponent, {
       width: '400px',
-      disableClose: true,
+      disableClose: false,
     });
   }
 
@@ -102,7 +102,7 @@ export class LoginComponent {
     this.close(); // Close current dialog
     this.dialog.open(ForgotPasswordComponent, {
       width: '400px',
-      disableClose: true,
+      disableClose: false,
     });
   }
 

@@ -10,13 +10,15 @@ import { ForgotPasswordComponent } from './forget/forget.component';
 import { FutsalDetailFormComponent } from './FutsalDetails/futsal-detail-form/futsal-detail-form.component';
 import { FutsalDetailsComponent } from './futsal-details/futsal-details.component';
 import { BookingDetailsComponent } from './booking-details/booking-details.component';
-
+import { FutsalPageComponent } from './futsal-page/futsal-page.component';
 
 
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },  // Default route
+  { path: 'register', component: RegisterComponent }, // Route for register page
   { path: 'futsaldetail', component: FutsalDetailFormComponent },
+  { path: 'futsalpage', component: FutsalPageComponent},
   { path: 'futsaldetailcomponent', component: FutsalDetailsComponent},
   { path:'futsaldetailscomponent', component: FutsalDetailsComponent },
   { path: 'futsal', component: FutsalComponent},

@@ -31,9 +31,12 @@
         <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
       </div>
     </div>
+      <button type="submit" class="btn btn-success btn-lg mt-3" [disabled]="loginForm.invalid">Login</button>
 
-        <button type="submit" class="btn btn-success btn-lg mt-3" [disabled]="loginForm.invalid">Login</button>
+    <!-- Use a div for Register link -->
+<div class="register-link" (click)="openSignup()">Register</div>
 
+<!-- Forgot Password link -->
+<div class="forgot-password" (click)="openForgetPassword()">Forgot Password?</div>
     </form>   
-
 </div>

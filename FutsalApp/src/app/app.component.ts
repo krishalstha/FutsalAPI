@@ -16,11 +16,11 @@ export class AppComponent {
   isLoggedIn = false;
   userType: string | null = null;
   
-  constructor(
-    private router: Router,
-    private dialog: MatDialog,
-    private loginService: LoginDetailService
-  ) {}
+    constructor(
+      private router: Router,
+      private dialog: MatDialog,
+      private loginService: LoginDetailService
+    ) {}
   ngOnInit(): void {
     // Check login state on load
     this.userType = localStorage.getItem('userType');
@@ -49,26 +49,7 @@ login() {
     this.loginService.setLoginStatus(false);  
   }
 
-  openLoginDialog(): void {
-    const dialogRef = this.dialog.open(LoginComponent, {
-      width: '400px',
-      disableClose: true,
-    });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result?.isLoggedIn) {
-        // Update login state
-        this.isLoggedIn = true;
-        this.userType = result.userType; // Set userType if needed
-        localStorage.setItem('userType', this.userType || '');
-      }
-    });
-  }
 
-  openRegisterDialog(): void {
-    this.dialog.open(RegisterComponent, {
-      width: '400px',
-      disableClose: true,
-    });
-  }
+  
 }

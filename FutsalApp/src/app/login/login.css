@@ -89,3 +89,27 @@ input[type="text"], input[type="email"], input[type="password"], select {
 .remember-forget .forget-link:hover {
     text-decoration: underline;
 }
+/* Add this to your login.css or component-specific styles */
+.register-link {
+    color: #007bff;
+    font-size: 16px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .register-link:hover {
+    color: #0056b3;
+  }
+  
+  .forgot-password {
+    color: #007bff;
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .forgot-password:hover {
+    color: #0056b3;
+  }
+  
+
