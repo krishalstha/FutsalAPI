@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FutsalAPI.Migrations
 {
     [DbContext(typeof(FutsalDbContext))]
-    [Migration("20250207083349_FutsalDB")]
+    [Migration("20250207122442_FutsalDB")]
     partial class FutsalDB
     {
         /// <inheritdoc />
