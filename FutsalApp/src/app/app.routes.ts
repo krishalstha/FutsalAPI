@@ -24,6 +24,7 @@ export const routes: Routes = [
   { path: 'futsal', component: FutsalComponent},
   { path: 'bookingscreen/:futsalName', component: BookingDetailsComponent },
   { path: 'aboutus', component: AboutusComponent},
+  { path: 'contactus', component: ContactusComponent},
   {path: 'contactus', component: ContactusComponent},
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: RegisterComponent},

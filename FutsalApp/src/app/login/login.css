@@ -1,115 +1,48 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #e9ecef;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
 .login-container {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
 }
+
 h1 {
-    text-align: center;
-    font-size: 28px;
-    color: #007bff;
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
 }
-label {
-    font-size: 14px;
-    margin: 8px 0;
-    display: block;
-    color: #495057;
+
+.form-group {
+    margin-bottom: 1.5rem;
 }
-input[type="text"], input[type="email"], input[type="password"], select {
+
+.form-control {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 18px;
-    border: 1px solid #ced4da;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 16px;
-    box-sizing: border-box;
 }
-.submit-btn {
+
+.text-danger {
+    font-size: 0.875rem;
+}
+
+button {
     width: 100%;
-    padding: 14px;
-    background-color: #007bff;
-    color: white;
-    border: none;
+    padding: 0.8rem;
+    font-size: 1.1rem;
     border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.submit-btn:hover {
-    background-color: #0056b3;
-}
-.text-center {
-    text-align: center;
 }
 
-
-.footer-text {
-    font-size: 14px;
-    color: #6c757d;
-}
-.error {
-    color: red;
-    font-size: 12px;
-}
-.remember-forget {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.remember-forget label {
-    font-size: 14px;
-    color: #495057;
-    margin: 0;
-    display: flex;
-    align-items: center;
-}
-
-.remember-forget .forget-link {
-    font-size: 14px;
+.register-link, .forgot-password {
+    font-size: 1rem;
     color: #007bff;
-    text-decoration: none;
-    margin: 0;
+    cursor: pointer;
+    margin-top: 0.5rem;
 }
 
-.remember-forget .forget-link:hover {
+.register-link:hover, .forgot-password:hover {
     text-decoration: underline;
 }
-/* Add this to your login.css or component-specific styles */
-.register-link {
-    color: #007bff;
-    font-size: 16px;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  .register-link:hover {
-    color: #0056b3;
-  }
-  
-  .forgot-password {
-    color: #007bff;
-    font-size: 14px;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  .forgot-password:hover {
-    color: #0056b3;
-  }
-  
-

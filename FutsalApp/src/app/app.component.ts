@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDetailService } from './shared/login-detail.service';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { Router } from '@angular/router'; 
 import { RouterOutlet, RouterModule } from '@angular/router';
 

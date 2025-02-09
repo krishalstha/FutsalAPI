@@ -8,7 +8,6 @@ import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import { BookingScreenDetailFormComponent } from './bookingscreen-detail-form/bookingscreen-detail-form.component';
 import { BookingDetailFormComponent } from './booking-detail-form/booking-detail-form.component';
 // Import Components
 import { AppComponent } from './app.component';
@@ -48,7 +47,6 @@ import { AppRoutingModule } from './app-routing.module';
     AboutusComponent,
     RegisterComponent,
     LoginComponent,
-    BookingScreenDetailFormComponent,
     BookingDetailFormComponent,
     
   ],

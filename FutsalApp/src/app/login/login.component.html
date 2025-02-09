@@ -1,42 +1,46 @@
 <div class="login-container">
-    <h1>FutsalLogin</h1>
-    <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" >
-        
-     <!-- email -->
-     <div class="form-group">
-      <label for="email">Email:</label>
-      <input
-        id="email"
-        type="email"
-        formControlName="email"
-        class="form-control"
-        placeholder="Enter email"
-      />
-      <div class="text-danger" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
-        <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
-        <small *ngIf="loginForm.get('email')?.errors?.['email']">Enter a valid email address.</small>
+  <h1 class="text-center">Futsal Login</h1>
+  <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+      
+      <!-- Email -->
+      <div class="form-group">
+          <label for="email">Email:</label>
+          <input
+              id="email"
+              type="email"
+              formControlName="email"
+              class="form-control"
+              placeholder="Enter your email"
+          />
+          <div class="text-danger" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+              <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
+              <small *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid email address.</small>
+          </div>
       </div>
-    </div>
-        
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input
-        id="password"
-        type="password"
-        formControlName="password"
-        class="form-control"
-        placeholder="Enter password"
-      />
-      <div class="text-danger" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
-        <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+      
+      <!-- Password -->
+      <div class="form-group">
+          <label for="password">Password:</label>
+          <input
+              id="password"
+              type="password"
+              formControlName="password"
+              class="form-control"
+              placeholder="Enter your password"
+          />
+          <div class="text-danger" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+              <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+              <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters.</small>
+          </div>
       </div>
-    </div>
-      <button type="submit" class="btn btn-success btn-lg mt-3" [disabled]="loginForm.invalid">Login</button>
+      
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary btn-lg mt-3" [disabled]="loginForm.invalid">Login</button>
 
-    <!-- Use a div for Register link -->
-<div class="register-link" (click)="openSignup()">Register</div>
-
-<!-- Forgot Password link -->
-<div class="forgot-password" (click)="openForgetPassword()">Forgot Password?</div>
-    </form>   
+      <!-- Register and Forgot Password Links -->
+      <div class="text-center mt-3">
+          <div class="register-link" (click)="openSignup()">Don't have an account? Register</div>
+          <div class="forgot-password" (click)="openForgetPassword()">Forgot your password?</div>
+      </div>
+  </form>   
 </div>
